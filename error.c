@@ -26,6 +26,39 @@ int num_len(int num)
 
 	return (len);
 }
+
+char *_itoa(int num)
+{
+	char *buffer;
+	int len = num_len(num);
+	unsigned int num1;
+
+	buffer = malloc(sizeof(char) * (len + 1));
+	if (!buffer)
+		return (NULL);
+
+	buffer[len] = '\0';
+
+	if (num < 0)
+	{
+		num1 = num * -1;
+		buffer[0] = '-';
+	}
+	else
+	{
+		num1 = num;
+	}
+
+	len--;
+	do {
+		buffer[len] = (num1 % 10) + '0';
+		num1 /= 10;
+		len--;
+	} while (num1 > 0);
+
+	return (buffer);
+}
+
 /**
  * create_error - write error message to stderr
  * @args: command line arguments

@@ -93,7 +93,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int proc_file_commands(char *file_path, int *exe_ret);
 int cant_open(char *file_path);
 char **_strtok(char *line, char *delim);
-int fork(void);
 int execve(const char *pathname, char *const argv[], char *const envp[]);
 
 

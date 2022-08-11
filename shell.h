@@ -104,6 +104,7 @@ void help_all(void);
 void help_alias(void);
 void help_cd(void);
 void help_exit(void);
+void help_env(void);
 
 int hist;
 char *name;

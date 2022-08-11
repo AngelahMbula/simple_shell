@@ -7,6 +7,13 @@
 #include <string.h>
 #include <ssp.h>
 #include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/wait.h>
 
 #define EXIT -3
 #define END_OF_FILE -2
@@ -37,7 +44,8 @@ typedef struct builtin_s
  */
 void sh_loop(void);
 char *sh_read_line(void);
-char **sh_split_line(char *line);
+int token_len(char *str, char *delim);
+int count_tokens(char *str, char *delim);
 int sh_launch(char **args);
 int sh_execute(char **args, char **front);
 int sh_env(char **args, char __attribute__((__unused__)) **front);
@@ -58,7 +66,6 @@ char *error_2_cd(char **args);
 char *error_2_syntax(char **args);
 char *error_126(char **args);
 char *error_127(char **args);
-char *itoa(int num, char *buffer, int);
 void sig_handler(int sig);
 char **_getenv(const char *var);
 char **copy_env(void);
@@ -89,25 +96,20 @@ void logical_ops(char *line, ssize_t *new_len);
 void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_itoa(int num);
+int num_len(int num);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int proc_file_commands(char *file_path, int *exe_ret);
 int cant_open(char *file_path);
 char **_strtok(char *line, char *delim);
-int fork(void);
-int execve(const char *pathname, char *const argv[], char *const envp[]);
-
+void help_all(void);
+void help_alias(void);
+void help_cd(void);
+void help_exit(void);
+void help_env(void);
 
 int hist;
 char *name;
 extern char **environ;
 
-
-#include <dirent.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/wait.h>
 
 #endif

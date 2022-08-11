@@ -3,22 +3,6 @@
  * sh_loop - print a prompt, call a function to read a line, call function to split line into
  * args and execute args
  */
-void sh_loop(void)
-{
-    char *line;
-    char **args, **front = 0;
-    int status;
-
-    do {
-        printf("> ");
-        line = sh_read_line();
-        args = sh_split_line(line);
-        status = sh_execute(args, front);
-
-        free(line);
-        free(args);
-    } while(status);
-}
 
 void handle_line(char **line, ssize_t read)
 {

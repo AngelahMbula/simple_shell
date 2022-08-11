@@ -37,7 +37,8 @@ typedef struct builtin_s
  */
 void sh_loop(void);
 char *sh_read_line(void);
-char **sh_split_line(char *line);
+int token_len(char *str, char *delim);
+int count_tokens(char *str, char *delim);
 int sh_launch(char **args);
 int sh_execute(char **args, char **front);
 int sh_env(char **args, char __attribute__((__unused__)) **front);

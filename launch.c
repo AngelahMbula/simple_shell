@@ -4,29 +4,100 @@
  * @args: pointer to command line argument
  * Return: 1 on success
  */
-int sh_launch(char **args)
+char *get_pid(void)
 {
-    pid_t pid, wpid;
-    int status;
+    size_t i = 0;
+	char *buffer;
+	ssize_t file;
 
-    pid = fork();
-    if (pid == 0)
-    {
-        if (execvp(args[0], args) == -1)
-        {
-            perror("sh");
-        }
-        exit(EXIT_FAILURE);
-    }
-    else if (pid < 0)
-    {
-        perror("sh");
-    }
-    else
-    {
-        do {
-           pid_t wpid = waitpid(pid_t pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
-    return (1);
+	file = open("/proc/self/stat", O_RDONLY);
+	if (file == -1)
+	{
+		perror("Cant read file");
+		return (NULL);
+	}
+	buffer = malloc(120);
+	if (!buffer)
+	{
+		close(file);
+		return (NULL);
+	}
+	read(file, buffer, 120);
+	while (buffer[i] != ' ')
+		i++;
+	buffer[i] = '\0';
+
+	close(file);
+	return (buffer);
+}
+/**
+ * @brief 
+ * 
+ * @param args 
+ * @return int 
+ */
+void variable_replacement(char **line, int *exe_ret)
+{
+	int j, k = 0, len;
+	char *replacement = NULL, *old_line = NULL, *new_line;
+
+	old_line = *line;
+	for (j = 0; old_line[j]; j++)
+	{
+		if (old_line[j] == '$' && old_line[j + 1] &&
+				old_line[j + 1] != ' ')
+		{
+			if (old_line[j + 1] == '$')
+			{
+				replacement = get_pid();
+				k = j + 2;
+			}
+			else if (old_line[j + 1] == '?')
+			{
+				replacement = _itoa(*exe_ret);
+				k = j + 2;
+			}
+			else if (old_line[j + 1])
+			{
+				/* extract the variable name to search for */
+				for (k = j + 1; old_line[k] &&
+						old_line[k] != '$' &&
+						old_line[k] != ' '; k++)
+					;
+				len = k - (j + 1);
+				replacement = get_env_value(&old_line[j + 1], len);
+			}
+			new_line = malloc(j + strlen(replacement)
+					  + strlen(&old_line[k]) + 1);
+			if (!line)
+				return;
+			new_line[0] = '\0';
+			strncat(new_line, old_line, j);
+			if (replacement)
+			{
+				strcat(new_line, replacement);
+				free(replacement);
+				replacement = NULL;
+			}
+			strcat(new_line, &old_line[k]);
+			free(old_line);
+			*line = new_line;
+			old_line = new_line;
+			j = -1;
+		}
+	}
+}
+
+/**
+ * sig_handler - prints new prompt once signaled
+ * @sig: the signal
+ * Return: void
+ */
+void sig_handler(int sig)
+{
+	char *new_prompt = "\n$ ";
+
+	(void)sig;
+	signal(SIGINT, sig_handler);
+	write(STDIN_FILENO, new_prompt, 3);
 }

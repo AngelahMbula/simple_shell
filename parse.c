@@ -1,42 +1,43 @@
 #include "shell.h"
-#define SH_TOK_BUFSIZE 64
-#define SH_TOK_DELIM " \t\r\n\a"
+/**
+* token_len - obtains the length of a token
+*/
+int token_len(char *str, char *delim)
+{
+	int index = 0, len = 0;
+
+	while (*(str + index) && *(str + index) != *delim)
+	{
+		len++;
+		index++;
+	}
+
+	return (len);
+}
 
 /**
- * sh_split_line - parse the line into a list of arguments
- * @line: string of command
- * Return: array of tokens
+ * count_tokens - Counts the number of delimited
+ *                words contained within a string.
+ * @str: The string to be searched.
+ * @delim: The delimiter character.
+ *
+ * Return: The number of words contained within str.
  */
-char **sh_split_line(char *line)
+int count_tokens(char *str, char *delim)
 {
-    int bufsize = SH_TOK_BUFSIZE, position = 0;
-    char **tokens = malloc(bufsize * sizeof(char *));
-    char *token;
+	int index, tokens = 0, len = 0;
 
-    if (!tokens)
-    {
-        fprintf(stderr,"sh:allocation error\n");
-        exit(EXIT_FAILURE);
-    }
-    token = strtok(line, SH_TOK_DELIM);
-    while (token != NULL)
-    {
-        tokens[position] = token;
-        position++;
+	for (index = 0; *(str + index); index++)
+		len++;
 
-        if (position >= bufsize)
-        {
-            bufsize += SH_TOK_BUFSIZE;
-            tokens = realloc(tokens, bufsize * sizeof(char *));
+	for (index = 0; index < len; index++)
+	{
+		if (*(str + index) != *delim)
+		{
+			tokens++;
+			index += token_len(str + index, delim);
+		}
+	}
 
-            if (!tokens)
-            {
-                fprintf(stderr,"sh:allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-        }
-        token = strtok(NULL, SH_TOK_DELIM);
-    }
-    tokens[position] = '\0';
-    return (tokens);
+	return (tokens);
 }

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ssp.h>
+#include <sys/types.h>
 
 #define EXIT -3
 #define END_OF_FILE -2
@@ -92,7 +93,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int proc_file_commands(char *file_path, int *exe_ret);
 int cant_open(char *file_path);
 char **_strtok(char *line, char *delim);
-pid_t fork(void);
+int fork(void);
 int execve(const char *pathname, char *const argv[], char *const envp[]);
 
 
@@ -107,7 +108,6 @@ extern char **environ;
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 
 #endif

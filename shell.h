@@ -59,7 +59,6 @@ char *error_2_cd(char **args);
 char *error_2_syntax(char **args);
 char *error_126(char **args);
 char *error_127(char **args);
-char *itoa(int num, char *buffer, int);
 void sig_handler(int sig);
 char **_getenv(const char *var);
 char **copy_env(void);

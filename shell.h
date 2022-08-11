@@ -96,6 +96,7 @@ void logical_ops(char *line, ssize_t *new_len);
 void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_itoa(int num);
+int num_len(int num);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int proc_file_commands(char *file_path, int *exe_ret);
 int cant_open(char *file_path);

@@ -7,6 +7,13 @@
 #include <string.h>
 #include <ssp.h>
 #include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/wait.h>
 
 #define EXIT -3
 #define END_OF_FILE -2
@@ -99,13 +106,5 @@ int hist;
 char *name;
 extern char **environ;
 
-
-#include <dirent.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/wait.h>
 
 #endif

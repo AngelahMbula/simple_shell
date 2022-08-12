@@ -1,5 +1,5 @@
 #include "shell.h"
-#define SH_RL_BUFSIZE 1024
+#define SH_RL_BUFSIZE 4096
 /**
  * sh_read_line - reads line from stdin
  * Return: void

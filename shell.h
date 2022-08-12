@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ssp.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
@@ -100,24 +99,13 @@ int num_len(int num);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int proc_file_commands(char *file_path, int *exe_ret);
 int cant_open(char *file_path);
-char **_strtok(char *line, char *delim);
+char **_strtok(char *s, char *delim);
+char *_strpbrk(char *s, char *accept);
 void help_all(void);
 void help_alias(void);
 void help_cd(void);
 void help_exit(void);
 void help_env(void);
-/**
-*string function
-*/
-int strlen(const char *s);
-char *strcpy(char *dest, const char *src);
-char *strcat(char *dest, const char *src);
-char *strncat(char *dest, const char *src, size_t n);
-char *strchr(char *s, char c);
-int strspn(char *s, char *accept);
-int strcmp(char *s1, char *s2);
-int strncmp(const char *s1, const char *s2, size_t n);
-
 
 int hist;
 char *name;

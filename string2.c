@@ -8,18 +8,7 @@
  * Return: If c is found - a pointer to the first occurence.
  *         If c is not found - NULL.
  */
-char *strchr(char *s, char c)
-{
-	int index;
 
-	for (index = 0; s[index]; index++)
-	{
-		if (s[index] == c)
-			return (s + index);
-	}
-
-	return (NULL);
-}
 
 /**
  * strspn - Gets the length of a prefix substring.
@@ -29,7 +18,7 @@ char *strchr(char *s, char c)
  * Return: The number of bytes in s which
  *         consist only of bytes from accept.
  */
-int strspn(char *s, char *accept)
+extern size_t strspn(const char *s, const char *accept)
 {
 	int bytes = 0;
 	int index;
@@ -58,7 +47,7 @@ int strspn(char *s, char *accept)
  *         0 if s1 = s2
  *         Negative byte difference if s1 < s2
  */
-int strcmp(char *s1, char *s2)
+int strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
 	{

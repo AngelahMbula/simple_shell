@@ -87,17 +87,3 @@ void variable_replacement(char **line, int *exe_ret)
 		}
 	}
 }
-
-/**
- * sig_handler - prints new prompt once signaled
- * @sig: the signal
- * Return: void
- */
-void sig_handler(int sig)
-{
-	char *new_prompt = "\n$ ";
-
-	(void)sig;
-	signal(SIGINT, sig_handler);
-	write(STDIN_FILENO, new_prompt, 3);
-}

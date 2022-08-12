@@ -106,6 +106,18 @@ void help_alias(void);
 void help_cd(void);
 void help_exit(void);
 void help_env(void);
+/**
+*string function
+*/
+int strlen(const char *s);
+char *strcpy(char *dest, const char *src);
+char *strcat(char *dest, const char *src);
+char *strncat(char *dest, const char *src, size_t n);
+char *strchr(char *s, char c);
+int strspn(char *s, char *accept);
+int strcmp(char *s1, char *s2);
+int strncmp(const char *s1, const char *s2, size_t n);
+
 
 int hist;
 char *name;
